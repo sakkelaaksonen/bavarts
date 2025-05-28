@@ -2,6 +2,10 @@
 
 A modern e-commerce website showcasing handcrafted African calabash lamps, built with Eleventy (11ty) and featuring a dynamic shopping cart system.
 
+## Synopsis
+
+This project presents an elegant online storefront for Bav'ArtS Collection, specializing in authentic handcrafted calabash lamps from Africa. The site features a responsive design with smooth scrolling navigation, dynamic product loading, and a fully functional shopping cart with checkout capabilities.
+
 ## Architecture
 
 **Frontend Stack:**
@@ -23,15 +27,15 @@ A modern e-commerce website showcasing handcrafted African calabash lamps, built
 ## Running the Project
 
 ### Prerequisites
-- Node.js (v16 or higher)
+- Node.js (v22 or higher)
 - npm
 
 ### Development
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/bavarts.git
-   cd bavarts
+   git clone https://github.com/yourusername/bavarts-collection.git
+   cd bavarts-collection
    ```
 
 2. Install dependencies:
@@ -57,6 +61,25 @@ A modern e-commerce website showcasing handcrafted African calabash lamps, built
    ```bash
    npm run preview
    ```
+
+## Deployment to GitHub Pages
+
+### Automatic Deployment
+
+1. Push your code to the `main` branch
+2. GitHub Actions will automatically build and deploy to GitHub Pages
+3. Enable GitHub Pages in your repository settings:
+   - Go to Settings → Pages
+   - Source: "GitHub Actions"
+
+### Manual Deployment
+
+You can also trigger deployment manually:
+1. Go to Actions tab in your GitHub repository
+2. Select "Deploy to GitHub Pages" workflow
+3. Click "Run workflow"
+
+The site will be available at: `https://yourusername.github.io/bavarts-collection/`
 
 ### Project Structure
 
@@ -88,5 +111,6 @@ src/
 - **Email Integration**: Order processing via email
 - **Smooth Scrolling**: Navigation with active section highlighting
 - **Image Optimization**: Optimized asset loading and display
+- **GitHub Pages Ready**: Automated deployment with GitHub Actions
 
 The site features a sophisticated cart system with accordion UI, form validation, and email-based order processing, making it ready for real-world e-commerce use.
