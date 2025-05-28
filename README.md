@@ -68,18 +68,9 @@ This project presents an elegant online storefront for Bav'ArtS Collection, spec
 
 1. Push your code to the `main` branch
 2. GitHub Actions will automatically build and deploy to GitHub Pages
-3. Enable GitHub Pages in your repository settings:
-   - Go to Settings → Pages
-   - Source: "GitHub Actions"
 
-### Manual Deployment
 
-You can also trigger deployment manually:
-1. Go to Actions tab in your GitHub repository
-2. Select "Deploy to GitHub Pages" workflow
-3. Click "Run workflow"
-
-The site will be available at: `https://yourusername.github.io/bavarts-collection/`
+The site will be available at: `https://sakkelaaksonen.github.io/bavarts/`
 
 ### Project Structure
 
@@ -112,5 +103,3 @@ src/
 - **Smooth Scrolling**: Navigation with active section highlighting
 - **Image Optimization**: Optimized asset loading and display
 - **GitHub Pages Ready**: Automated deployment with GitHub Actions
-
-The site features a sophisticated cart system with accordion UI, form validation, and email-based order processing, making it ready for real-world e-commerce use.
