@@ -1,0 +1,19 @@
+{% for product in products.products %}   
+<div class="product-card bg-amber-100 p-4 rounded" data-product-id="{{ product.id }}">
+    <div class="product-image-container w-full aspect-square bg-gray-200 rounded overflow-hidden relative mb-4">
+        <img src="{{ product.image }}" alt="{{ product.name }}" class="absolute inset-0 w-full h-full object-cover">
+    </div>
+    <h3 class="text-2xl font-bold mt-2 text-amber-900">{{ product.name }}</h3>
+    <p class="text-xl mt-1 text-slate-700">
+        {% if product.price %}€{{ product.price }}{% else %}Ask for price{% endif %}
+    </p>
+    <p class="text-xl mt-1 text-slate-700 mb-10">
+        {{ product.description if product.description else "No description available" }}
+    </p>
+    <p class="text-center mb-10">
+        <button class="add-to-cart-btn hover:ring-2 hover:ring-white drop-shadow-lg hover:ring-offset-2 text-xl mt-1 text-white bg-lime-800 py-4 px-8 rounded-sm hover:bg-lime-500 transition-colors">
+            Add to Cart
+        </button>
+    </p>
+</div>
+{% endfor %}

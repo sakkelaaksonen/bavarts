@@ -1,0 +1,511 @@
+/* src/css/main.css */
+@import "tailwindcss";
+
+/* CSS Modules support */
+@layer components {
+/* TODO organize custom styles css into layers */
+}
+
+/* Custom styles */
+
+.icon-pocket {
+  background-image: url('/assets/pattern.png');
+  background-size: 350%;
+  background-repeat: no-repeat;
+  background-position: 50% 49%;
+  padding: 10px;
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  border: 8px solid black;
+  border-style: double;
+  outline: 2px solid white;
+  outline-offset: 2px;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: inset 0 0 0 1000px rgba(255, 255, 255, 0.5);
+}
+
+/* Polaroid Card Styles */
+.polaroid-card {
+  transform: rotate(-8deg);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.polaroid-card:hover {
+  transform: rotate(-3deg) scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.polaroid-inner {
+  background: white;
+  padding: 16px 16px 60px 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+  max-width: 280px;
+  position: relative;
+}
+
+.polaroid-photo {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 1px;
+  display: block;
+}
+
+.polaroid-caption {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  text-align: center;
+}
+
+.font-handwriting {
+  font-family: 'Courier New', monospace;
+  font-style: italic;
+}
+
+/* Responsive adjustments for polaroid */
+@media (max-width: 1024px) {
+  .polaroid-card {
+      transform: rotate(-5deg);
+      margin-bottom: 2rem;
+  }
+
+  .polaroid-card:hover {
+      transform: rotate(-2deg) scale(1.03);
+  }
+}
+
+@media (max-width: 640px) {
+  .polaroid-inner {
+      max-width: 240px;
+      padding: 12px 12px 50px 12px;
+  }
+
+  .polaroid-photo {
+      height: 250px;
+  }
+
+  .polaroid-caption {
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+  }
+}
+
+/* Form validation styles - WCAG AAA compliant colors */
+.checkout-form input:invalid,
+.checkout-form input[type="checkbox"]:invalid {
+  border-color: #b91c1c;
+  /* Darker red for better contrast */
+  box-shadow: 0 0 0 1px #b91c1c;
+}
+
+.checkout-form input:invalid:focus,
+.checkout-form input[type="checkbox"]:invalid:focus {
+  outline: none;
+  border-color: #991b1b;
+  /* Even darker red for focus state */
+  box-shadow: 0 0 0 2px #991b1b;
+}
+
+/* Highlight the ToS label when checkbox is invalid */
+.tos-checkbox {
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 8px;
+  margin: -9px;
+}
+
+.tos-checkbox:has(input:invalid) {
+  background-color: #fef2f2;
+  /* Light red background - good contrast */
+  border-color: #f87171;
+  /* Medium red border */
+}
+
+.tos-checkbox:has(input:invalid) span {
+  color: #991b1b;
+  /* Dark red text - WCAG AAA compliant */
+  font-weight: 500;
+}
+
+/* Show validation messages when form is invalid and user tries to submit */
+.checkout-form:invalid .invalid-feedback {
+  display: block !important;
+}
+
+/* Alternative approach using adjacent sibling selector for older browser support */
+input[type="checkbox"]:invalid+span {
+  color: #991b1b;
+  /* Dark red text - WCAG AAA compliant */
+  font-weight: 500;
+}
+
+input[type="checkbox"]:invalid~.invalid-feedback {
+  display: block !important;
+}
+
+/* Shake animation for invalid form submission attempt */
+@keyframes shake {
+
+  0%,
+  100% {
+      transform: translateX(0);
+  }
+
+  25% {
+      transform: translateX(-5px);
+  }
+
+  75% {
+      transform: translateX(5px);
+  }
+}
+
+.checkout-form:invalid {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Accordion Styles */
+.cart-accordion-content {
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+  opacity: 1;
+}
+
+.cart-accordion-content.hidden {
+  max-height: 0 !important;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.checkout-accordion-content {
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+  opacity: 1;
+}
+
+.checkout-accordion-content.hidden {
+  max-height: 0 !important;
+  opacity: 0;
+  overflow: hidden;
+}
+
+/* Chevron rotation animation */
+.accordion-chevron-rotated {
+  transform: rotate(180deg);
+}
+
+/* Full height cart panel with proper scrolling */
+.cart-panel-container {
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.cart-accordion-full {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  /* Allow flex item to shrink */
+}
+
+.cart-accordion-content-full {
+  flex: 1;
+  overflow-y: auto;
+  transition: opacity 0.3s ease-out;
+}
+
+.checkout-accordion-content-full {
+  flex: 1;
+  overflow-y: auto;
+  transition: opacity 0.3s ease-out;
+}
+
+/* Equal height accordions - both take same space */
+.accordion-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.accordion-item {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.accordion-item.active {
+  flex: 1;
+}
+
+.accordion-item.inactive {
+  flex: 0 0 auto;
+}
+
+.accordion-header {
+  flex-shrink: 0;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.accordion-header:last-child {
+  border-bottom: none;
+}
+
+.accordion-content {
+  flex: 1;
+  overflow-y: auto;
+  transition: opacity 0.3s ease-out;
+}
+
+.accordion-content.hidden {
+  display: none;
+}
+
+/* Rolling blade of light effect for shop name */
+.shop-name-gradient {
+  background: linear-gradient(
+      90deg,
+      #fbbf24 0%,
+      #fbbf24 30%,
+      #ffffff 50%,
+      #fbbf24 70%,
+      #fbbf24 100%
+  );
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: blade-of-light 20s ease-in-out infinite;
+  position: relative;
+}
+
+/* Dots of light overlay effect */
+.shop-name-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+      radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+      radial-gradient(circle at 25% 60%, rgba(255, 255, 255, 0.6) 1px, transparent 1px),
+      radial-gradient(circle at 40% 30%, rgba(255, 255, 255, 0.9) 1px, transparent 1px),
+      radial-gradient(circle at 55% 70%, rgba(255, 255, 255, 0.7) 1px, transparent 1px),
+      radial-gradient(circle at 70% 40%, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+      radial-gradient(circle at 85% 80%, rgba(255, 255, 255, 0.6) 1px, transparent 1px),
+      radial-gradient(circle at 90% 15%, rgba(255, 255, 255, 0.9) 1px, transparent 1px);
+  background-size: 20px 20px, 25px 25px, 18px 18px, 22px 22px, 24px 24px, 19px 19px, 21px 21px;
+  animation: lampshade-dots 20s ease-in-out infinite;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+@keyframes lampshade-dots {
+  0%, 100% {
+      opacity: 0.2;
+      transform: translateX(-10px);
+  }
+  25% {
+      opacity: 0.3;
+      transform: translateX(0px);
+  }
+  50% {
+      opacity: 0.4;
+      transform: translateX(5px);
+  }
+  75% {
+      opacity: 0.6;
+      transform: translateX(-5px);
+  }
+}
+
+@keyframes blade-of-light {
+  0% {
+      background-position: -200% 0;
+  }
+  50% {
+      background-position: 200% 0;
+  }
+  100% {
+      background-position: -200% 0;
+  }
+}
+
+/* Fallback for browsers that don't support background-clip: text */
+@supports not (-webkit-background-clip: text) {
+  .shop-name-gradient {
+      background: none;
+      -webkit-text-fill-color: initial;
+      color: #fbbf24;
+      text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+      animation: text-glow 10s ease-in-out infinite;
+  }
+  
+  .shop-name-gradient::before {
+      display: none;
+  }
+}
+
+@keyframes text-glow {
+  0%, 100% {
+      text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+  }
+  50% {
+      text-shadow: 
+          0 0 20px rgba(255, 255, 255, 0.8), 
+          0 0 30px rgba(251, 191, 36, 0.6),
+          2px 2px 0px rgba(255, 255, 255, 0.3),
+          -2px -2px 0px rgba(255, 255, 255, 0.3),
+          4px 4px 0px rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* Hero button with gradient animation */
+.hero-shop-button {
+  background-color: #000000;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-shop-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+      radial-gradient(circle at 15% 25%, rgba(251, 191, 36, 0.6) 1px, transparent 1px),
+      radial-gradient(circle at 35% 75%, rgba(251, 191, 36, 0.4) 1px, transparent 1px),
+      radial-gradient(circle at 65% 35%, rgba(251, 191, 36, 0.7) 1px, transparent 1px),
+      radial-gradient(circle at 85% 65%, rgba(251, 191, 36, 0.5) 1px, transparent 1px);
+  background-size: 30px 30px, 25px 25px, 28px 28px, 32px 32px;
+  animation: hero-button-dots 18s ease-in-out infinite;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+@keyframes hero-button-gradient {
+  0% {
+      background-position: -200% 0;
+  }
+  50% {
+      background-position: 200% 0;
+  }
+  100% {
+      background-position: -200% 0;
+  }
+}
+
+@keyframes hero-button-dots {
+  0%, 100% {
+      opacity: 0.3;
+      transform: translateX(-8px);
+  }
+  25% {
+      opacity: 0.6;
+      transform: translateX(0px);
+  }
+  50% {
+      opacity: 0.4;
+      transform: translateX(6px);
+  }
+  75% {
+      opacity: 0.7;
+      transform: translateX(-4px);
+  }
+}
+
+/* Button text styling */
+.hero-shop-button .button-text {
+  color: #fbbf24;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  position: relative;
+  z-index: 10;
+}
+
+/* Hover effects */
+.hero-shop-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.hero-shop-button:hover::before {
+  animation-duration: 20s;
+}
+
+.hero-shop-button:hover {
+  animation-duration: 30s;
+}
+
+/* Product card hover effects */
+.product-card {
+  transition: all 0.3s ease;
+}
+
+.product-card .product-image-container {
+  transition: all 0.3s ease;
+  position: relative;
+  border: 2px solid #000000;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.4);
+
+}
+
+.product-card:hover .product-image-container {
+  transform: scale(1.02);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.8);
+}
+
+/* Navigation menu hover effects */
+nav a {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color:  rgba(205, 176, 103, 0.8);
+  transition: width 0.3s ease-in-out;
+}
+
+nav a::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  right: 0;
+  width: 0;
+  height: 1px;
+  background-color: rgba(205, 176, 103, 0.8);
+  transition: width 0.3s ease-in-out 0.1s;
+}
+
+nav a:hover::after,
+nav a.active::after {
+  width: 100%;
+}
+
+nav a:hover::before,
+nav a.active::before {
+  width: 100%;
+}
+
+/* Active nav item styling */
+nav a.active {
+  color: #fbbf24;
+}
+
+nav a.active::before {
+  transition-delay: 0s;
+}

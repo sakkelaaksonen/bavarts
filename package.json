@@ -1,0 +1,24 @@
+{
+  "name": "eleventy-simple",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:css && npm run build:js && eleventy",
+    "build:css": "tailwindcss -i ./src/css/main.css -o ./_site/css/main.css --minify",
+    "build:js": "esbuild src/js/main.js --bundle --outfile=_site/js/main.js --format=esm --minify",
+    "watch:css": "tailwindcss -i ./src/css/main.css -o ./_site/css/main.css --watch",
+    "watch:js": "esbuild src/js/main.js --bundle --outfile=_site/js/main.js --format=esm --watch",
+    "watch:11ty": "eleventy --serve --watch",
+    "dev": "concurrently \"npm run watch:css\" \"npm run watch:js\" \"npm run watch:11ty\""
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.0"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.8",
+    "concurrently": "^9.1.2",
+    "esbuild": "^0.25.5",
+    "mustache": "^4.2.0",
+    "tailwindcss": "^4.1.8"
+  }
+}
