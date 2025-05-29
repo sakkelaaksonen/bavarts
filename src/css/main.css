@@ -3,7 +3,60 @@
 
 /* CSS Modules support */
 @layer components {
-/* TODO organize custom styles css into layers */
+  /* Contact Section Styles */
+  .contact-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #d97706, #f59e0b, #fbbf24);
+  }
+
+  .contact-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .contact-icon {
+    position: relative;
+  }
+
+  .contact-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: rgba(217, 119, 6, 0.1);
+    border-radius: 50%;
+    z-index: -1;
+  }
+
+  .payment-method {
+    padding: 1.5rem;
+    border: 2px solid #f3f4f6;
+    border-radius: 0.75rem;
+    transition: border-color 0.3s ease;
+  }
+
+  .payment-method:hover {
+    border-color: #d97706;
+  }
+
+  /* Professional gradient backgrounds */
+  .contact {
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(217, 119, 6, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
+  }
 }
 
 /* Custom styles */
@@ -93,6 +146,11 @@
       left: 12px;
       right: 12px;
   }
+
+  /* Contact cards responsive */
+  .contact-card {
+    margin-bottom: 1rem;
+  }
 }
 
 /* Form validation styles - WCAG AAA compliant colors */
@@ -137,36 +195,44 @@
   display: block !important;
 }
 
-/* Alternative approach using adjacent sibling selector for older browser support */
-input[type="checkbox"]:invalid+span {
-  color: #991b1b;
-  /* Dark red text - WCAG AAA compliant */
-  font-weight: 500;
+/* Custom utilities */
+.text-shadow-sm {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-input[type="checkbox"]:invalid~.invalid-feedback {
-  display: block !important;
+.text-shadow-lg {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Shake animation for invalid form submission attempt */
-@keyframes shake {
-
-  0%,
-  100% {
-      transform: translateX(0);
-  }
-
-  25% {
-      transform: translateX(-5px);
-  }
-
-  75% {
-      transform: translateX(5px);
-  }
+.min-h-150 {
+  min-height: 37.5rem;
 }
 
-.checkout-form:invalid {
-  animation: shake 0.5s ease-in-out;
+/* Smooth scrolling for navigation */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Navigation active state */
+nav a.active {
+  color: #fbbf24;
+  position: relative;
+}
+
+nav a.active::before {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #fbbf24;
+  transition: all 0.3s ease;
+  transition-delay: 0.1s;
+}
+
+nav a.active::before {
+  transition-delay: 0s;
 }
 
 /* Accordion Styles */
@@ -499,13 +565,4 @@ nav a.active::after {
 nav a:hover::before,
 nav a.active::before {
   width: 100%;
-}
-
-/* Active nav item styling */
-nav a.active {
-  color: #fbbf24;
-}
-
-nav a.active::before {
-  transition-delay: 0s;
 }

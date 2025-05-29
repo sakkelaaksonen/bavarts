@@ -814,6 +814,7 @@ var config_default = {
   siteUrl: "https://bavarts-collection.com",
   siteAuthor: "muchmoredesign",
   emailjs: {
+    enabled: false,
     serviceId: "bava_core",
     publicKey: "wqk3XEKm16oaV5pum",
     defaultRecipient: "sakke.laaksonen@gmail.com",
@@ -832,7 +833,13 @@ var EmailService = class {
    */
   constructor() {
     this.defaultRecipient = config_default.emailjs.defaultRecipient;
-    es_default.init(config_default.emailjs.publicKey);
+    this.emailjsEnabled = config_default.emailjs.enabled;
+    if (this.emailjsEnabled) {
+      es_default.init(config_default.emailjs.publicKey);
+      console.log("EmailJS initialized");
+    } else {
+      console.log("EmailJS disabled - using mailto fallback only");
+    }
   }
   /**
    * Sends order via EmailJS service
@@ -872,6 +879,11 @@ var EmailService = class {
    */
   sendOrderEmail(orderData) {
     return new Promise((resolve, reject) => {
+      if (!this.emailjsEnabled) {
+        console.log("EmailJS disabled - using mailto fallback");
+        this.sendOrderEmailFallback(orderData).then(resolve).catch(reject);
+        return;
+      }
       try {
         this.#sendEmailJs(orderData).then(() => {
           console.log("Order sent successfully via EmailJS");
