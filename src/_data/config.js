@@ -1,7 +1,11 @@
 export default {
   siteName: "Bav'artS Collection",
   siteDescription: "Bav'artS Collection",
-  siteUrl: "https://bavarts-collection.com",
+  siteUrl:{
+    production: "https://bavarts-collection.com",
+    development: "http://localhost:8080",
+    staging: "https://sakkelaaksonen.github.io/bavarts/"
+  },
   siteAuthor: "muchmoredesign",
   emailjs: {
     enabled: false,
@@ -10,8 +14,9 @@ export default {
     defaultRecipient: "sakke.laaksonen@gmail.com",
     templateId: "bava_order_confirm"
   },
-  site: {
-    name: "Bav'ArtS Collection",
-    url: "https://sakkelaaksonen.github.io/bavarts/"
+  socialMedia: {
+    facebook: "https://www.facebook.com/profile.php?id=100076981475175  ",
+    instagram: "https://www.instagram.com/fidelebavi/",
+
   }
 };
