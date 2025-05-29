@@ -4,7 +4,8 @@
  */
 
 import Mustache from 'mustache';
-
+import PRODUCTS from '../../_data/products';
+import { CART_ADD_EVENT } from './cart.js';
 
 const TEMPLATE_PRODUCT = `
    {{#products}}   
@@ -37,29 +38,7 @@ export class ProductCard {
     /**
      * @type {Product[]}
      */
-    static products = [
-        {
-            name: "Calabash Lamp 1",
-            price: 200,
-            id: "1",
-            description: "This is the first product",
-            image: "assets/lamp1-night.jpg"
-        },
-        {
-            name: "Calabash Lamp 2",
-            price: 200,
-            id: "2",
-            description: "This is the second product",
-            image: "assets/lamp2-day.jpg"
-        },
-        {
-            name: "Calabash Lamp 3",
-            price: 200,
-            id: "3",
-            description: "This is the third product",
-            image: "assets/lamp3-day.jpg"
-        }
-    ];
+    static products = PRODUCTS.products;
 
     /**
      * Find a product by its ID
@@ -118,8 +97,8 @@ export class ProductCard {
         // Create a normalized copy of the product
         const productCopy = this.normalizeProduct(product);
         
-        // Dispatch custom event with product copy
-        const event = new CustomEvent('cart:add', {
+        // Dispatch custom event with product copy using imported event name
+        const event = new CustomEvent(CART_ADD_EVENT, {
             detail: { product: productCopy }
         });
         document.dispatchEvent(event);

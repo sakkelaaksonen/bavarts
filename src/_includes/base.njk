@@ -7,14 +7,14 @@
   <meta name="description" content="{{ description or config.siteDescription }}">
   <meta name="author" content="{{ config.siteAuthor }}">
   <link rel="stylesheet" href="css/main.css">
- 
+  <link rel="icon" type="image/png" href="assets/favicon.svg">
 </head>
 <body class="bg-amber-50 text-gray-900 font-sans">
     {% include "navigation.njk" %}
     {{ content | safe }}
     
     {% include "footer.njk" %}
-    
+
     <script type="module" src="js/main.js"></script>
 </body>
 </html> 

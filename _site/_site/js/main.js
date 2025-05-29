@@ -452,6 +452,36 @@ mustache.Context = Context;
 mustache.Writer = Writer;
 var mustache_default = mustache;
 
+// src/_data/products.js
+var products_default = {
+  products: [
+    {
+      name: "Calabash Lamp 1",
+      price: 200,
+      id: "1",
+      description: "This is the first product",
+      image: "assets/lamp1-night.jpg",
+      images: ["assets/lamp1-night.jpg", "assets/lamp1-day.jpg"]
+    },
+    {
+      name: "Calabash Lamp 2",
+      price: 200,
+      id: "2",
+      description: "This is the second product",
+      image: "assets/lamp2-day.jpg",
+      images: ["assets/lamp2-day.jpg", "assets/lamp2-day-2.jpg"]
+    },
+    {
+      name: "Calabash Lamp 3",
+      price: 200,
+      id: "3",
+      description: "This is the third product",
+      image: "assets/lamp3-day.jpg",
+      images: ["assets/lamp3-day.jpg", "assets/lamp3-day-2.jpg"]
+    }
+  ]
+};
+
 // src/js/modules/products.js
 var TEMPLATE_PRODUCT = `
    {{#products}}   
@@ -474,29 +504,7 @@ var ProductCard = class {
   /**
    * @type {Product[]}
    */
-  static products = [
-    {
-      name: "Calabash Lamp 1",
-      price: 200,
-      id: "1",
-      description: "This is the first product",
-      image: "assets/lamp1-night.jpg"
-    },
-    {
-      name: "Calabash Lamp 2",
-      price: 200,
-      id: "2",
-      description: "This is the second product",
-      image: "assets/lamp2-day.jpg"
-    },
-    {
-      name: "Calabash Lamp 3",
-      price: 200,
-      id: "3",
-      description: "This is the third product",
-      image: "assets/lamp3-day.jpg"
-    }
-  ];
+  static products = products_default.products;
   /**
    * Find a product by its ID
    * @param {string} id - Product ID to find
