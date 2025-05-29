@@ -1,5 +1,7 @@
 /* src/css/main.css */
 @import "tailwindcss";
+@import "./nav.css";
+
 
 /* CSS Modules support */
 @layer components {
@@ -7,6 +9,8 @@
   .contact-card {
     position: relative;
     overflow: hidden;
+    @apply bg-white rounded-xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow duration-300
+
   }
 
   .contact-card::before {
@@ -21,6 +25,7 @@
 
   .contact-card:hover {
     transform: translateY(-4px);
+    transition: all 0.3s ease-in;
   }
 
   .contact-icon {
@@ -62,7 +67,7 @@
 /* Custom styles */
 
 .icon-pocket {
-  background-image: url('assets/pattern.png');
+  background-image: url('../assets/pattern.png');
   background-size: 350%;
   background-repeat: no-repeat;
   background-position: 50% 49%;
@@ -213,27 +218,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Navigation active state */
-nav a.active {
-  color: #fbbf24;
-  position: relative;
-}
-
-nav a.active::before {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background-color: #fbbf24;
-  transition: all 0.3s ease;
-  transition-delay: 0.1s;
-}
-
-nav a.active::before {
-  transition-delay: 0s;
-}
 
 /* Accordion Styles */
 .cart-accordion-content {
@@ -529,40 +513,7 @@ nav a.active::before {
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.8);
 }
 
-/* Navigation menu hover effects */
-nav a {
-  position: relative;
-  transition: color 0.3s ease;
-}
 
-nav a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background-color:  rgba(205, 176, 103, 0.8);
-  transition: width 0.3s ease-in-out;
-}
-
-nav a::before {
-  content: '';
-  position: absolute;
-  top: -4px;
-  right: 0;
-  width: 0;
-  height: 1px;
-  background-color: rgba(205, 176, 103, 0.8);
-  transition: width 0.3s ease-in-out 0.1s;
-}
-
-nav a:hover::after,
-nav a.active::after {
-  width: 100%;
-}
-
-nav a:hover::before,
-nav a.active::before {
-  width: 100%;
+.add-to-cart-btn {
+  @apply hover:ring-2 hover:ring-white drop-shadow-lg hover:ring-offset-2 text-xl mt-1 text-white bg-lime-800 py-4 px-8 rounded-sm hover:bg-lime-500 transition-colors
 }

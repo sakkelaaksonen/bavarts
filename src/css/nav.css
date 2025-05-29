@@ -1,0 +1,60 @@
+@layer components {
+
+/* Navigation menu hover effects */
+nav a {
+    position: relative;
+    transition: color 0.3s ease;
+    @apply text-white hover:text-amber-200 transition-colors
+
+  }
+  
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color:  rgba(205, 176, 103, 0.8);
+    transition: width 0.3s ease-in-out;
+  }
+  
+  nav a::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    right: 0;
+    width: 0;
+    height: 1px;
+    background-color: rgba(205, 176, 103, 0.8);
+    transition: width 0.3s ease-in-out 0.1s;
+  }
+  
+  nav a:hover::after,
+  nav a.active::after {
+    width: 100%;
+  }
+  
+  nav a:hover::before,
+  nav a.active::before {
+    width: 100%;
+  }
+  
+  /* Navigation active state */
+  nav a.active {
+    color: #fbbf24;
+    position: relative;
+  }
+  
+  /* Ensure active state shows both borders immediately */
+  nav a.active::before {
+    width: 100%;
+    transition-delay: 0s;
+  }
+  
+  nav a.active::after {
+    width: 100%;
+    transition-delay: 0s;
+  }
+}
+

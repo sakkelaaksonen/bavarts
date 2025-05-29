@@ -463,7 +463,7 @@ var TEMPLATE_PRODUCT = `
             <p class="text-xl mt-1 text-slate-700">{{#price}}\u20AC{{/price}}{{price}}{{^price}}Ask for price{{/price}}</p>
             <p class="text-xl mt-1 text-slate-700 mb-10">{{description}}{{^description}}No description available{{/description}}</p>
             <p class="text-center mb-10">
-                <button class="add-to-cart-btn hover:ring-2 hover:ring-white drop-shadow-lg hover:ring-offset-2 text-xl mt-1 text-white bg-lime-800 py-4 px-8 rounded-sm hover:bg-lime-500 transition-colors">
+                <button class="add-to-cart-btn ">
                     Add to Cart
                 </button>
             </p>
