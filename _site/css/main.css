@@ -1280,7 +1280,7 @@
 }
 @layer components;
 .icon-pocket {
-  background-image: url('/assets/pattern.png');
+  background-image: url('assets/pattern.png');
   background-size: 350%;
   background-repeat: no-repeat;
   background-position: 50% 49%;

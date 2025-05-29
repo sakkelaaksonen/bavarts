@@ -19,6 +19,7 @@
     "@11ty/eleventy": "^3.1.0"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@tailwindcss/cli": "^4.1.8",
     "concurrently": "^9.1.2",
     "esbuild": "^0.25.5",

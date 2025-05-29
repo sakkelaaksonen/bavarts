@@ -1,3 +1,5 @@
+import emailjs from '@emailjs/browser';
+import CONFIG from '../../_data/config.js';
 /**
  * @fileoverview Email functionality for the webshop
  * @description Handles email sending for order confirmations
@@ -11,7 +13,72 @@ export class EmailService {
      * Creates an instance of EmailService
      */
     constructor() {
-        this.defaultRecipient = 'contact@example.com';
+        this.defaultRecipient = CONFIG.emailjs.defaultRecipient;
+        this.emailjsEnabled = CONFIG.emailjs.enabled;
+        
+        // Initialize EmailJS only if enabled
+        if (this.emailjsEnabled) {
+            emailjs.init(CONFIG.emailjs.publicKey);
+            console.log('EmailJS initialized');
+        } else {
+            console.log('EmailJS disabled - using mailto fallback only');
+        }
+    }
+
+    /**
+     * Sends order via EmailJS service
+     * @param {Object} orderData - The cart order data
+     * @returns {Promise} Promise that resolves when email is sent
+     * @private
+     */
+    #sendEmailJs(orderData) {
+        // Template fields mapping:
+        // order_id - unique order identifier
+        // orders - formatted list of order items
+        // image_url - first product image URL
+        // name - customer name
+        // units - total quantity of items
+        // price - individual item price (for single item orders)
+        // cost - total order cost
+        // email - customer email
+
+        // Generate unique order ID
+        const orderId = `ORD-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
+        
+        // Calculate total units
+        const totalUnits = orderData.items.reduce((sum, item) => sum + item.quantity, 0);
+        
+        // Format orders as readable string
+        const ordersText = orderData.items.map(item => 
+            `${item.name} x${item.quantity} - €${item.price ? (item.price * item.quantity).toFixed(2) : 'Price on request'}`
+        ).join('\n');
+        
+        // Get first product image URL (full URL for email)
+        const firstImageUrl = orderData.items.length > 0 ? 
+            `${CONFIG.site.url}${orderData.items[0].image}` : '';
+        
+        // Get price of first item (for single item template compatibility)
+        const firstItemPrice = orderData.items.length > 0 && orderData.items[0].price ? 
+            orderData.items[0].price.toFixed(2) : '0.00';
+
+        const templateParams = {
+            order_id: orderId,
+            orders: ordersText,
+            image_url: firstImageUrl,
+            name: orderData.customer.name,
+            units: totalUnits.toString(),
+            price: firstItemPrice,
+            cost: orderData.total.toFixed(2),
+            email: orderData.customer.email
+        };
+
+        console.log('Sending order via EmailJS:', templateParams);
+        
+        return emailjs.send(
+            CONFIG.emailjs.serviceId,
+            CONFIG.emailjs.templateId,
+            templateParams
+        );
     }
 
     /**
@@ -20,6 +87,47 @@ export class EmailService {
      * @returns {Promise} Promise that resolves when email is sent
      */
     sendOrderEmail(orderData) {
+        return new Promise((resolve, reject) => {
+            // Check if EmailJS is enabled
+            if (!this.emailjsEnabled) {
+                console.log('EmailJS disabled - using mailto fallback');
+                this.sendOrderEmailFallback(orderData)
+                    .then(resolve)
+                    .catch(reject);
+                return;
+            }
+
+            try {
+                // Try EmailJS first
+                this.#sendEmailJs(orderData)
+                    .then(() => {
+                        console.log('Order sent successfully via EmailJS');
+                        resolve();
+                    })
+                    .catch((error) => {
+                        console.warn('EmailJS failed, falling back to mailto:', error);
+                        // Fallback to mailto
+                        this.sendOrderEmailFallback(orderData)
+                            .then(resolve)
+                            .catch(reject);
+                    });
+            } catch (error) {
+                console.warn('EmailJS setup failed, using mailto fallback:', error);
+                // Fallback to mailto
+                this.sendOrderEmailFallback(orderData)
+                    .then(resolve)
+                    .catch(reject);
+            }
+        });
+    }
+
+    /**
+     * Fallback email method using mailto
+     * @param {Object} orderData - The order data to send
+     * @returns {Promise} Promise that resolves when email is sent
+     * @private
+     */
+    sendOrderEmailFallback(orderData) {
         return new Promise((resolve, reject) => {
             // Create email content
             const subject = `New Order from ${orderData.customer.name}`;
