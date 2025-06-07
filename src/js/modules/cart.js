@@ -11,6 +11,8 @@ import { EmailService } from './email.js';
  * @description Configuration constants for the shopping cart
  */
 
+export const CART_ADD_EVENT = 'cart:add';
+
 
 const TEMPLATE_CART = `  {{#items}}
         <div class="flex items-center space-x-4 p-2 bg-gray-50 rounded">
