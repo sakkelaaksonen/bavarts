@@ -103,3 +103,11 @@ src/
 - **Smooth Scrolling**: Navigation with active section highlighting
 - **Image Optimization**: Optimized asset loading and display
 - **GitHub Pages Ready**: Automated deployment with GitHub Actions
+
+
+## Analytics
+
+https://dashboard.simpleanalytics.com/sakkelaaksonen.github.io
+
+
+TODO update to production url when ready
