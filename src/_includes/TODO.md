@@ -10,7 +10,12 @@
     
 
 - [ ] Register domain name (https://bavarts-collection.com ?)
-- [ ] Add a sitemap 
-- [ ] Add a robots.txt file
-- [ ] Add a favicon 
+- [ ] Add a sitemap.xml (?)
+- [ ] Add a robots.txt file (?)
+
+- [ ] Update payment details: email 
+- [ ] Update payment details: bank account (?) Check email template
+- [ ] Update payment details: phone (?)
+- [ ] Analytics
+
 
