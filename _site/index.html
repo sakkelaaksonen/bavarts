@@ -66,7 +66,7 @@
   
 
     <!-- Cart UI -->
-    <div id="cart-panel" class="fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-lg transform translate-x-full 
+        <div id="cart-panel" class="fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-lg transform translate-x-full 
         transition-transform duration-300 z-40">
         <div class="cart-panel-container p-4 flex flex-col">
             <div class="flex justify-between items-center mb-4 flex-shrink-0">
@@ -222,11 +222,19 @@
                                             <select id="cart-address-country" name="addressCountry" required
                                                 class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent invalid:border-red-500 invalid:ring-red-500">
                                                 <option value="">Select a country</option>
-                                                <option value="NL">Netherlands</option>
-                                                <option value="BE">Belgium</option>
+                                                <option value="FI">Finland</option>
+                                                <option value="SE">Sweden</option>
+                                                <option value="NO">Norway</option>
+                                                <option value="DK">Denmark</option>
                                                 <option value="DE">Germany</option>
                                                 <option value="FR">France</option>
-                                                <option value="UK">United Kingdom</option>
+                                                <option value="ES">Spain</option>
+                                                <option value="IT">Italy</option>
+                                                <option value="NL">Netherlands</option>
+                                                <option value="BE">Belgium</option>
+                                                <option value="AT">Austria</option>
+                                                <option value="CH">Switzerland</option>
+                                                <option value="GB">United Kingdom</option>
                                                 <option value="US">United States</option>
                                                 <option value="CA">Canada</option>
                                                 <option value="AU">Australia</option>
@@ -282,6 +290,65 @@
                                             soon.</p>
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Complete Accordion -->
+                    <div id="order-complete-accordion" data-accordion="order-complete" class="accordion-header hidden">
+                        <button id="order-complete-toggle"
+                            class="accordion-header w-full px-4 py-3 text-left bg-green-50 hover:bg-green-100 flex justify-between items-center transition-colors">
+                            <span class="font-semibold text-green-700">Order Complete ✓</span>
+                            <svg id="order-complete-chevron" class="w-5 h-5 text-green-500 transform transition-transform"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div id="order-complete-content" class="accordion-content hidden">
+                            <div class="p-4">
+                                <div class="text-center mb-4">
+                                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-lg font-semibold text-green-700 mb-2">Thank You!</h3>
+                                    <p class="text-sm text-gray-600 mb-4">Your order has been sent successfully.</p>
+                                </div>
+
+                                <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
+                                    <h4 class="font-semibold text-amber-800 mb-2">What happens next?</h4>
+                                    <ul class="text-sm text-amber-700 space-y-1">
+                                        <li>• We'll review your order details</li>
+                                        <li>• You'll receive a confirmation email shortly</li>
+                                        <li>• We'll contact you about timeline and any custom requirements</li>
+                                        <li>• Payment instructions will be provided via email</li>
+                                    </ul>
+                                </div>
+
+                                <div class="space-y-3">
+                                    <button id="recopy-order-btn" type="button"
+                                        class="w-full bg-lime-700 text-white py-2 px-4 rounded hover:bg-lime-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors flex items-center justify-center space-x-2">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                        </svg>
+                                        <span>Copy Order Details Again</span>
+                                    </button>
+                                    
+                                    <button id="start-new-order-btn" type="button"
+                                        class="w-full border border-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-50 transition-colors">
+                                        Start New Order
+                                    </button>
+                                </div>
+
+                                <div class="mt-4 pt-3 border-t border-gray-200 text-center">
+                                    <p class="text-xs text-gray-500">
+                                        Questions? Contact us at 
+                                        <a href="mailto:" class="text-blue-600 hover:underline"></a>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>

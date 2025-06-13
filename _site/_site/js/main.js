@@ -1008,7 +1008,11 @@ var CART_CONFIG = {
     ADDRESS_STREET: "cart-address-street",
     ADDRESS_CITY: "cart-address-city",
     ADDRESS_POSTAL: "cart-address-postal",
-    ADDRESS_COUNTRY: "cart-address-country"
+    ADDRESS_COUNTRY: "cart-address-country",
+    // Order complete elements
+    RECOPY_ORDER_BTN: "recopy-order-btn",
+    START_NEW_ORDER_BTN: "start-new-order-btn",
+    ORDER_COMPLETE_ACCORDION: "order-complete-accordion"
   },
   /** @type {Object} CSS classes */
   CLASSES: {
@@ -1033,6 +1037,7 @@ var ShoppingCart = class {
     this.items = [];
     this.customerInfo = this.createDefaultCustomerInfo();
     this.emailService = new EmailService();
+    this.storedOrderText = "";
     this.elements = {
       form: document.getElementById(CART_CONFIG.ELEMENTS.CHECKOUT_FORM),
       nameField: document.getElementById(CART_CONFIG.ELEMENTS.CUSTOMER_NAME),
@@ -1044,7 +1049,6 @@ var ShoppingCart = class {
       postalField: document.getElementById(CART_CONFIG.ELEMENTS.ADDRESS_POSTAL),
       countryField: document.getElementById(CART_CONFIG.ELEMENTS.ADDRESS_COUNTRY)
     };
-    const templateElement = document.getElementById(CART_CONFIG.ELEMENTS.CART_TEMPLATE);
     this.cartTemplate = TEMPLATE_CART;
     this.init();
   }
@@ -1241,107 +1245,6 @@ var ShoppingCart = class {
     }
   }
   /**
-   * @description Handles form submission
-   * @private
-   */
-  handleFormSubmit() {
-    if (this.items.length === 0) {
-      alert("Your cart is empty");
-      return;
-    }
-    if (!this.validateForm()) {
-      return;
-    }
-    this.processCheckout();
-  }
-  /**
-   * @description Processes the checkout with customer and address information
-   * @private
-   */
-  processCheckout() {
-    if (this.items.length === 0) {
-      alert("Your cart is empty");
-      return;
-    }
-    let orderText = `Order Details:
-
-`;
-    orderText += `Customer Information:
-`;
-    orderText += `Name: ${this.customerInfo.name}
-`;
-    orderText += `Email: ${this.customerInfo.email}
-
-`;
-    orderText += `Delivery Address:
-`;
-    orderText += `${this.customerInfo.address.street}
-`;
-    orderText += `${this.customerInfo.address.city}, ${this.customerInfo.address.postal}
-`;
-    orderText += `${this.customerInfo.address.country}
-
-`;
-    orderText += `Items:
-`;
-    this.items.forEach((item) => {
-      orderText += `- ${item.name}
-`;
-      orderText += `  Quantity: ${item.quantity}
-`;
-      if (item.price) {
-        orderText += `  Price: \u20AC${(item.price * item.quantity).toFixed(2)}
-`;
-      }
-      orderText += "\n";
-    });
-    orderText += `Total: \u20AC${this.total.toFixed(2)}`;
-    const subject = encodeURIComponent("Order from " + this.customerInfo.name);
-    let bodyText = encodeURIComponent("Order Details:") + "%0D%0A%0D%0A";
-    bodyText += encodeURIComponent("Customer Information:") + "%0D%0A";
-    bodyText += encodeURIComponent("Name: " + this.customerInfo.name) + "%0D%0A";
-    bodyText += encodeURIComponent("Email: " + this.customerInfo.email) + "%0D%0A%0D%0A";
-    bodyText += encodeURIComponent("Delivery Address:") + "%0D%0A";
-    bodyText += encodeURIComponent(this.customerInfo.address.street) + "%0D%0A";
-    bodyText += encodeURIComponent(this.customerInfo.address.city + ", " + this.customerInfo.address.postal) + "%0D%0A";
-    bodyText += encodeURIComponent(this.customerInfo.address.country) + "%0D%0A%0D%0A";
-    bodyText += encodeURIComponent("Items:") + "%0D%0A";
-    this.items.forEach((item) => {
-      bodyText += encodeURIComponent("- " + item.name) + "%0D%0A";
-      bodyText += encodeURIComponent("  Quantity: " + item.quantity) + "%0D%0A";
-      if (item.price) {
-        bodyText += encodeURIComponent("  Price: \u20AC" + (item.price * item.quantity).toFixed(2)) + "%0D%0A";
-      }
-      bodyText += "%0D%0A";
-    });
-    bodyText += encodeURIComponent("Total: \u20AC" + this.total.toFixed(2));
-    navigator.clipboard.writeText(orderText).then(() => {
-      alert(`Thanks ${this.customerInfo.name}! I've copied your order to your clipboard - just paste it anywhere to send it to me. Can't wait to get started on it!`);
-      const mailtoLink = `mailto:contact@example.com?subject=${subject}&body=${bodyText}`;
-      window.location.href = mailtoLink;
-      this.clearFormAndCart();
-    }).catch((err) => {
-      console.error("Failed to copy cart contents:", err);
-      alert("Oops! Something went wrong while trying to copy your order. Opening email client instead!");
-      const mailtoLink = `mailto:contact@example.com?subject=${subject}&body=${bodyText}`;
-      window.location.href = mailtoLink;
-      this.clearFormAndCart();
-    });
-  }
-  /**
-   * @description Clears the form and cart after successful checkout
-   * @private
-   */
-  clearFormAndCart() {
-    const form = this.elements.form;
-    if (form) {
-      form.reset();
-    }
-    this.customerInfo = this.createDefaultCustomerInfo();
-    this.clearCart();
-    this.togglePanel();
-  }
-  /**
    * @description Sets up event listeners for cart functionality
    * @private
    */
@@ -1379,6 +1282,14 @@ var ShoppingCart = class {
       const { product } = event.detail;
       this.addItem(product);
     });
+    const recopyOrderBtn = document.getElementById(CART_CONFIG.ELEMENTS.RECOPY_ORDER_BTN);
+    const startNewOrderBtn = document.getElementById(CART_CONFIG.ELEMENTS.START_NEW_ORDER_BTN);
+    if (recopyOrderBtn) {
+      recopyOrderBtn.addEventListener("click", () => this.recopyOrder());
+    }
+    if (startNewOrderBtn) {
+      startNewOrderBtn.addEventListener("click", () => this.startNewOrder());
+    }
     document.addEventListener("keydown", (e) => {
       const cartPanel = document.getElementById(CART_CONFIG.ELEMENTS.CART_PANEL);
       if (e.key === "Escape" && cartPanel && !cartPanel.classList.contains(CART_CONFIG.CLASSES.TRANSLATE_FULL)) {
@@ -1392,10 +1303,8 @@ var ShoppingCart = class {
    */
   togglePanel() {
     const panel = document.getElementById(CART_CONFIG.ELEMENTS.CART_PANEL);
-    const cartItems = document.getElementById(CART_CONFIG.ELEMENTS.CART_ITEMS);
-    const template = TEMPLATE_CART;
-    if (!panel || !cartItems || !template) {
-      console.error("Required DOM elements not found");
+    if (!panel) {
+      console.error("Cart panel not found");
       return;
     }
     panel.classList.toggle(CART_CONFIG.CLASSES.TRANSLATE_FULL);
@@ -1468,18 +1377,6 @@ var ShoppingCart = class {
     this.updateCart();
   }
   /**
-   * @description Legacy checkout method - now redirects to form submission
-   * @public
-   * @deprecated Use form submission instead
-   */
-  checkout() {
-    const form = this.elements.form;
-    if (form) {
-      const submitEvent = new Event("submit", { bubbles: true, cancelable: true });
-      form.dispatchEvent(submitEvent);
-    }
-  }
-  /**
    * @private
    * @description Updates cart state and triggers UI update
    */
@@ -1530,6 +1427,7 @@ var ShoppingCart = class {
   setupAccordions() {
     const cartItemsToggle = document.getElementById("cart-items-toggle");
     const checkoutFormToggle = document.getElementById("checkout-form-toggle");
+    const orderCompleteToggle = document.getElementById("order-complete-toggle");
     const proceedToCheckoutBtn = document.getElementById("proceed-to-checkout");
     if (cartItemsToggle) {
       cartItemsToggle.addEventListener("click", () => {
@@ -1539,6 +1437,11 @@ var ShoppingCart = class {
     if (checkoutFormToggle) {
       checkoutFormToggle.addEventListener("click", () => {
         this.setActiveAccordion("checkout-form");
+      });
+    }
+    if (orderCompleteToggle) {
+      orderCompleteToggle.addEventListener("click", () => {
+        this.setActiveAccordion("order-complete");
       });
     }
     if (proceedToCheckoutBtn) {
@@ -1554,35 +1457,50 @@ var ShoppingCart = class {
   }
   /**
    * @description Sets the active accordion section
-   * @param {string} section - The section to activate ('cart-items' or 'checkout-form')
+   * @param {string} section - The section to activate ('cart-items', 'checkout-form', or 'order-complete')
    * @private
    */
   setActiveAccordion(section) {
     const accordions = document.querySelectorAll("[data-accordion]");
+    const accordionToggleButtons = document.querySelectorAll(".accordion-header > button");
     accordions.forEach((accordion) => {
       const accordionId = accordion.dataset.accordion;
       const content = document.getElementById(`${accordionId}-content`);
       const chevron = document.getElementById(`${accordionId}-chevron`);
+      const toggleButton = accordion.querySelector("button");
       if (accordionId === section) {
         accordion.classList.add("active");
+        accordion.classList.remove("hidden");
         if (content) content.classList.remove("hidden");
         if (chevron) chevron.classList.add("rotate-180");
       } else {
         accordion.classList.remove("active");
         if (content) content.classList.add("hidden");
         if (chevron) chevron.classList.remove("rotate-180");
+        if (accordionId === "order-complete") {
+          accordion.classList.add("hidden");
+        }
+      }
+    });
+    accordionToggleButtons.forEach((button) => {
+      if (section === "order-complete") {
+        button.disabled = true;
+        button.classList.add("cursor-not-allowed", "opacity-50");
+      } else {
+        button.disabled = false;
+        button.classList.remove("cursor-not-allowed", "opacity-50");
       }
     });
   }
   /**
-   * @description Submits the order
+   * @description Submits the order via EmailService and shows order complete panel
+   * This is the main checkout method used by the form submission
    * @private
    */
   submitOrder() {
     const submitButton = this.elements.submitButton;
     const submitText = submitButton.querySelector(".checkout-btn-text");
     const submitLoading = submitButton.querySelector(".checkout-btn-loading");
-    const successMessage = document.getElementById("cart-success-message");
     submitButton.disabled = true;
     submitText.classList.add("hidden");
     submitLoading.classList.remove("hidden");
@@ -1592,22 +1510,12 @@ var ShoppingCart = class {
       total: this.total,
       timestamp: (/* @__PURE__ */ new Date()).toISOString()
     };
+    this.storedOrderText = this.emailService.formatOrderEmail(orderData);
     this.emailService.sendOrderEmail(orderData).then(() => {
       submitButton.disabled = false;
       submitText.classList.remove("hidden");
       submitLoading.classList.add("hidden");
-      if (successMessage) {
-        successMessage.classList.remove("hidden");
-      }
-      this.clearCart();
-      const form = this.elements.form;
-      if (form) {
-        form.reset();
-      }
-      this.customerInfo = this.createDefaultCustomerInfo();
-      setTimeout(() => {
-        this.setActiveAccordion("cart-items");
-      }, 3e3);
+      this.showOrderComplete();
       console.log("Order submitted successfully:", orderData);
     }).catch((error) => {
       submitButton.disabled = false;
@@ -1624,6 +1532,60 @@ var ShoppingCart = class {
       acceptedTos: false,
       address: { street: "", city: "", postal: "", country: "" }
     };
+  }
+  /**
+   * @description Shows the order complete panel and clears form/cart
+   * @private
+   */
+  showOrderComplete() {
+    const form = this.elements.form;
+    if (form) {
+      form.reset();
+    }
+    this.customerInfo = this.createDefaultCustomerInfo();
+    this.clearCart();
+    this.setActiveAccordion("order-complete");
+  }
+  /**
+   * @description Copies the last order text to clipboard again
+   * @public
+   */
+  recopyOrder() {
+    if (!this.storedOrderText) {
+      alert("No order text available to copy.");
+      return;
+    }
+    navigator.clipboard.writeText(this.storedOrderText).then(() => {
+      const btn = document.getElementById(CART_CONFIG.ELEMENTS.RECOPY_ORDER_BTN);
+      const originalText = btn.innerHTML;
+      btn.innerHTML = `
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span>Copied!</span>
+                `;
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }, 2e3);
+    }).catch((err) => {
+      console.error("Failed to copy order text:", err);
+      alert("Failed to copy order text. Please try again.");
+    });
+  }
+  /**
+   * @description Starts a new order by resetting everything and going back to cart items
+   * @public
+   */
+  startNewOrder() {
+    this.storedOrderText = "";
+    const form = this.elements.form;
+    if (form) {
+      form.reset();
+    }
+    this.customerInfo = this.createDefaultCustomerInfo();
+    this.setActiveAccordion("cart-items");
   }
 };
 function initializeCart() {

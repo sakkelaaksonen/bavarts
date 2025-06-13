@@ -242,6 +242,34 @@ html {
   overflow: hidden;
 }
 
+/* Disabled accordion toggle button styles - only for accordion headers */
+.accordion-header > button:disabled {
+  cursor: not-allowed !important;
+  opacity: 0.5 !important;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.accordion-header > button:disabled:hover {
+  background-color: inherit !important;
+  transform: none !important;
+}
+
+/* Order complete accordion specific styles */
+#order-complete-accordion {
+  transition: opacity 0.3s ease-in-out;
+}
+
+#order-complete-accordion.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#order-complete-accordion:not(.hidden) {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 /* Chevron rotation animation */
 .accordion-chevron-rotated {
   transform: rotate(180deg);
