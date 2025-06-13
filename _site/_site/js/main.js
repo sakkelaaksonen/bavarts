@@ -741,7 +741,7 @@ var config_default = {
     bic: "REVOLT21"
   },
   emailjs: {
-    enabled: false,
+    enabled: true,
     serviceId: "bava_core",
     publicKey: "wqk3XEKm16oaV5pum",
     defaultRecipient: "sakke.laaksonen@gmail.com",
@@ -776,20 +776,18 @@ var EmailService = class {
    */
   #sendEmailJs(orderData) {
     const orderId = `ORD-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
-    const totalUnits = orderData.items.reduce((sum, item) => sum + item.quantity, 0);
-    const ordersText = orderData.items.map(
-      (item) => `${item.name} x${item.quantity} - \u20AC${item.price ? (item.price * item.quantity).toFixed(2) : "Price on request"}`
-    ).join("\n");
-    const firstImageUrl = orderData.items.length > 0 ? `${config_default.site.url}${orderData.items[0].image}` : "";
-    const firstItemPrice = orderData.items.length > 0 && orderData.items[0].price ? orderData.items[0].price.toFixed(2) : "0.00";
+    const orders = orderData.items.map((item) => {
+      return {
+        name: item.name,
+        units: item.quantity,
+        price: item.price
+      };
+    });
     const templateParams = {
       order_id: orderId,
-      orders: ordersText,
-      image_url: firstImageUrl,
-      name: orderData.customer.name,
-      units: totalUnits.toString(),
-      price: firstItemPrice,
-      cost: orderData.total.toFixed(2),
+      orders,
+      name: "Bav'ArtS Collection",
+      cost: { total: orderData.total.toFixed(2) },
       email: orderData.customer.email
     };
     console.log("Sending order via EmailJS:", templateParams);
