@@ -734,6 +734,12 @@ var config_default = {
     staging: "https://sakkelaaksonen.github.io/bavarts/"
   },
   siteAuthor: "muchmoredesign",
+  contact: {
+    email: "fidelebavi22@gmail.com",
+    phone: "+358 44 988 1023",
+    iban: "LT33 3250 0953 4733 5106",
+    bic: "REVOLT21"
+  },
   emailjs: {
     enabled: false,
     serviceId: "bava_core",

@@ -23,7 +23,7 @@
                 {# TODO Email #}
                 <h3 class="text-2xl font-bold text-amber-950 mb-4">Sales & Orders</h3>
                 <div class="contact-details space-y-2">
-                    <p class="text-slate-800 font-medium">sakke.laaksonen@gmail.com</p>
+                    <p class="text-slate-800 font-medium">{{ config.contact.email }}</p>
                     <p class="text-slate-600">Response within 24 hours</p>
                 </div>
             </div>
@@ -38,8 +38,8 @@
                 {# TODO Phone number #}
                 <h3 class="text-2xl font-bold text-amber-950 mb-4">Phone Support</h3>
                 <div class="contact-details space-y-2">
-                    <p class="text-slate-800 font-medium">+123 456 789</p>
-                    <p class="text-slate-600">Mon-Fri, 9AM-6PM</p>
+                    <p class="text-slate-800 font-medium">{{ config.contact.phone }}</p>
+                    {# <p class="text-slate-600">Mon-Fri, 9AM-6PM</p> #}
                 </div>
             </div>
 
@@ -53,9 +53,9 @@
                 <h3 class="text-2xl font-bold text-amber-950 mb-4">Payment</h3>
                 <div class="contact-details space-y-1 text-sm">
                 {# TODO Bank account #}
-                    <p class="text-slate-800 font-medium">FI12 3456 7890 1234 56</p>
-                    <p class="text-slate-700">SWIFT: NDEAFIHH</p>
-                    <p class="text-slate-700">Nordea Bank Finland</p>
+                    <p class="text-slate-800 font-medium">IBAN: {{ config.contact.iban }}</p>
+                    <p class="text-slate-700">BIC: {{ config.contact.bic }}</p>
+                    
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
             <p class="text-lg text-slate-700 mb-6">
                 Have questions about our products or need a custom piece?
             </p>
-            <a href="mailto:sakke.laaksonen@gmail.com" 
+            <a href="mailto:{{ config.contact.email }}" 
                class="inline-flex items-center px-8 py-4 bg-lime-600 text-white font-semibold rounded-lg hover:bg-amber-700 transition-colors duration-300 shadow-lg hover:shadow-xl">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
