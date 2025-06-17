@@ -14,7 +14,7 @@ export default {
     bic: "REVOLT21"
   },
   emailjs: {
-    enabled: true,
+    enabled: process.env.NODE_ENV === "production",
     serviceId: "bava_core",
     publicKey: "wqk3XEKm16oaV5pum",
     defaultRecipient: "sakke.laaksonen@gmail.com",
