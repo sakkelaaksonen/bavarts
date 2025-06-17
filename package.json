@@ -6,14 +6,14 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-    "build": "npm run build:css && npm run build:js && eleventy",
+    "build": "npm run build:css && npm run build:js && npx eleventy",
     "build:css": "tailwindcss -i ./src/css/main.css -o ./_site/css/main.css --minify",
     "build:js": "esbuild src/js/main.js --bundle --outfile=_site/js/main.js --format=esm --minify",
     "watch:css": "tailwindcss -i ./src/css/main.css -o ./_site/css/main.css --watch",
     "watch:js": "esbuild src/js/main.js --bundle --outfile=_site/js/main.js --format=esm --watch",
-    "watch:11ty": "eleventy --serve --watch",
+    "watch:11ty": "npx eleventy --serve --watch",
     "dev": "NODE_ENV=development concurrently \"npm run watch:css\" \"npm run watch:js\" \"npm run watch:11ty\"",
-    "preview": "eleventy --serve"
+    "preview": "npx eleventy --serve"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.0"
