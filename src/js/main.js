@@ -9,8 +9,6 @@ import { initializeApp } from './modules/app.js';
  * Initialize the application when DOM is loaded
  */
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('Hello World from main.js!');
-  
-  
+
   initializeApp();
 }); 
