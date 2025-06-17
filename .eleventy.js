@@ -3,8 +3,8 @@ export default function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/assets");
   
   // Copy CNAME file for GitHub Pages custom domain
-  eleventyConfig.addPassthroughCopy("CNAME");
-  
+  eleventyConfig.addPassthroughCopy("src/CNAME");
+     
   // Watch source files
   eleventyConfig.addWatchTarget("./src/css/");
   eleventyConfig.addWatchTarget("./src/js/");
