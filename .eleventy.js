@@ -1,10 +1,9 @@
 export default function(eleventyConfig) {
-  // Copy CSS and JS output to site
-  eleventyConfig.addPassthroughCopy("_site/css");
-  eleventyConfig.addPassthroughCopy("_site/js");
-  
   // Copy assets folder (images, fonts, etc.)
   eleventyConfig.addPassthroughCopy("src/assets");
+  
+  // Copy CNAME file for GitHub Pages custom domain
+  eleventyConfig.addPassthroughCopy("CNAME");
   
   // Watch source files
   eleventyConfig.addWatchTarget("./src/css/");
