@@ -24,5 +24,7 @@ export default {
     facebook: "https://www.facebook.com/profile.php?id=100076981475175  ",
     instagram: "https://www.instagram.com/fidelebavi/",
 
-  }
+  },
+  isProduction: process.env.NODE_ENV === "production",
+
 };

@@ -48,13 +48,14 @@ export class EmailService {
         const templateParams = {
             order_id: orderId,
             orders,
-            name: "Bav'ArtS Collection",
             cost:{total: orderData.total.toFixed(2)},
-            email: orderData.customer.email
+            email: orderData.customer.email,
+            customer: orderData.customer
         };
+        if(!CONFIG.isProduction){
+            console.log('Sending order via EmailJS:', templateParams);
+        }
 
-        console.log('Sending order via EmailJS:', templateParams);
-        
         return emailjs.send(
             CONFIG.emailjs.serviceId,
             CONFIG.emailjs.templateId,
