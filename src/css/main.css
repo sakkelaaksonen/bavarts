@@ -279,6 +279,24 @@ html {
 .cart-panel-container {
   height: 100vh;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mobile-specific cart panel adjustments */
+@media (max-width: 768px) {
+  .cart-panel-container {
+    height: 100vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  }
+  
+  /* Ensure accordion container is scrollable on mobile */
+  .accordion-container {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
 }
 
 .cart-accordion-full {
@@ -309,6 +327,8 @@ html {
   border: 1px solid #d1d5db;
   border-radius: 0.5rem;
   overflow: hidden;
+  /* Ensure scrollability */
+  min-height: 0;
 }
 
 .accordion-item {
@@ -319,6 +339,7 @@ html {
 
 .accordion-item.active {
   flex: 1;
+  min-height: 0;
 }
 
 .accordion-item.inactive {
@@ -338,10 +359,50 @@ html {
   flex: 1;
   overflow-y: auto;
   transition: opacity 0.3s ease-out;
+  min-height: 0;
+  /* Enable scrolling within accordion content */
+  -webkit-overflow-scrolling: touch;
 }
 
 .accordion-content.hidden {
   display: none;
+}
+
+/* Specific mobile improvements for form content */
+@media (max-width: 768px) {
+  /* Make checkout form content scrollable */
+  #checkout-form-content {
+    max-height: calc(100vh - 280px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2rem; /* Extra space at bottom for submit button */
+  }
+  
+  /* Make cart items content scrollable */
+  #cart-items-content {
+    max-height: calc(100vh - 280px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 1rem;
+  }
+  
+  /* Make order complete content scrollable */
+  #order-complete-content {
+    max-height: calc(100vh - 280px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2rem;
+  }
+  
+  /* Reduce padding on mobile for more space */
+  .cart-panel-container {
+    padding: 1rem;
+  }
+  
+  /* Smaller spacing in accordion content on mobile */
+  .accordion-content > div {
+    padding: 0.75rem;
+  }
 }
 
 /* Rolling blade of light effect for shop name */
