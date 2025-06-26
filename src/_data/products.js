@@ -10,24 +10,24 @@ export default {
         price: 200,
         id: "1",
         description: "This is the first product",
-        image: "assets/lamp1-night.jpg",
-        images: ["assets/lamp1-night.jpg", "assets/lamp1-day.jpg"]
+        image: "assets/lamp1-night.webp",
+        images: ["assets/lamp1-night.webp", "assets/lamp1-day.webp"]
     },
     {
         name: "Calabash Lamp 2",
         price: 200,
         id: "2",
         description: "This is the second product",
-        image: "assets/lamp2-day.jpg",
-        images: ["assets/lamp2-day.jpg", "assets/lamp2-day-2.jpg"]
+        image: "assets/lamp2-day.webp",
+        images: ["assets/lamp2-day.webp", "assets/lamp2-day-2.webp"]
     },
     {
         name: "Calabash Lamp 3",
         price: 200,
         id: "3",
         description: "This is the third product",
-        image: "assets/lamp3-day.jpg",
-        images: ["assets/lamp3-day.jpg", "assets/lamp3-day-2.jpg"]
+        image: "assets/lamp3-day.webp",
+        images: ["assets/lamp3-day.webp", "assets/lamp3-day-2.webp"]
     }
   ]
 }; 
