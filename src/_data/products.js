@@ -10,7 +10,7 @@ export default {
         price: 400,
         id: "1",
         description: "This is the first product",
-        image: "assets/lamp1-night.webp",
+        image: "assets/lamp1-3.jpg",
         images: ["assets/lamp1-night.webp", "assets/lamp1-day.webp"]
     },
     {
