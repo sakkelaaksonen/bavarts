@@ -7,7 +7,7 @@ export default {
   products:  [
     {
         name: "Calabash Lamp 1",
-        price: 200,
+        price: 400,
         id: "1",
         description: "This is the first product",
         image: "assets/lamp1-night.webp",
