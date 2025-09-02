@@ -284,7 +284,7 @@ html {
 }
 
 /* Mobile-specific cart panel adjustments */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) { */
   .cart-panel-container {
     height: 100vh;
     overflow-y: auto;
@@ -297,7 +297,7 @@ html {
     min-height: 0;
     overflow-y: auto;
   }
-}
+/* } */
 
 .cart-accordion-full {
   flex: 1;
@@ -369,7 +369,7 @@ html {
 }
 
 /* Specific mobile improvements for form content */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) { */
   /* Make checkout form content scrollable */
   #checkout-form-content {
     max-height: calc(100vh - 280px);
@@ -403,7 +403,7 @@ html {
   .accordion-content > div {
     padding: 0.75rem;
   }
-}
+/* } */
 
 /* Rolling blade of light effect for shop name */
 .shop-name-gradient {
